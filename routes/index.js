@@ -18,8 +18,8 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 	res.render('dashboard');
 });
 
-router.get('/test', ensureAuthenticated, function(req, res){
-	res.render('test');
+router.get('/event', ensureAuthenticated, function(req, res){
+	res.render('event');
 });
 
 
