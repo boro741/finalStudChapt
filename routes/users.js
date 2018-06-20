@@ -5,6 +5,9 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+function hello(){
+	console.log('hello');
+}
 // Register
 router.get('/register', function (req, res) {
 	res.render('register');
@@ -24,8 +27,19 @@ router.post('/createEvent', function(req,res){
 	var mobNo = req.body.mobNo;
 	var email = req.body.email;
 
-	console.log('Event Name: ',eventName);
-	res.render('home');
+	hello();
+	//console.log('Event Name: ',eventName);
+	// res.render('home');
+});
+
+// Register Participant
+router.post('/regParticipant', function(req,res){
+	var name = req.body.name;
+	var email = req.body.email;
+	var mobile = req.body.mobile;
+	var rollNo = req.body.rollNo;
+
+
 });
 
 // Register User
