@@ -10,12 +10,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var multer = require('multer');
 
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var posters = require('./routes/posters');
+var events = require('./routes/events');
 
 // Init App
 var app = express();
@@ -75,9 +78,10 @@ app.use(function (req, res, next) {
 });
 
 
-
 app.use('/', routes);
 app.use('/users', users);
+app.use('/posters',posters);
+app.use('/events',events);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

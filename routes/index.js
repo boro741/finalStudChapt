@@ -14,13 +14,16 @@ router.get('/',function(req, res){
 	res.render('home');
 });
 
+router.get('/test',function(req, res){
+	res.render('test');
+});
+
 router.get('/dashboard', ensureAuthenticated, function(req, res){
 	res.render('dashboard');
 });
 
-router.get('/event', ensureAuthenticated, function(req, res){
-	res.render('event');
+router.get('/regParticipant', ensureAuthenticated, function(req, res){
+	res.render('participants');
 });
-
 
 module.exports = router;

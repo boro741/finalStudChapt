@@ -2,12 +2,11 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var multer = require('multer');
 
 var User = require('../models/user');
+var Participant = require('../models/participant');
 
-function hello(){
-	console.log('hello');
-}
 // Register
 router.get('/register', function (req, res) {
 	res.render('register');
@@ -22,15 +21,18 @@ router.get('/login', function (req, res) {
 router.post('/createEvent', function(req,res){
 	var eventName = req.body.eventName;
 	var description = req.body.description;
-	var files = req.body.files;
+	var poster = req.body.poster;
 	var eventDate = req.body.eventDate;
 	var mobNo = req.body.mobNo;
 	var email = req.body.email;
 
-	hello();
-	//console.log('Event Name: ',eventName);
-	// res.render('home');
+	
+	console.log(req.body);
+	res.render('home', {
+		poster
+	});
 });
+
 
 // Register Participant
 router.post('/regParticipant', function(req,res){
@@ -39,8 +41,22 @@ router.post('/regParticipant', function(req,res){
 	var mobile = req.body.mobile;
 	var rollNo = req.body.rollNo;
 
-
+	
+	var newParticipant = new Participant({
+						rollNo: rollNo,
+						name: name,
+						email: email,
+						mobile: mobile
+					});
+	Participant.createParticipant(newParticipant, function (err, participant) {
+		if (err) throw err;
+		console.log(participant);
+	});
+    req.flash('success_msg', 'Participant stored');
+	res.redirect('/regParticipant');
+	
 });
+
 
 // Register User
 router.post('/register', function (req, res) {
@@ -140,5 +156,32 @@ router.get('/logout', function (req, res) {
 
 	res.redirect('/users/login');
 });
+
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null,file.originalname);
+    }
+  })
+  
+var upload = multer({ storage: storage }).single('poster');
+
+router.post('/profile', function (req, res) {
+  upload(req, res, function (err) {
+    if (err) {
+      // An error occurred when uploading
+    }
+
+	// Everything went fine
+	res.json({
+		success: true,
+		message: 'Image'
+	});
+  })
+});
+
 
 module.exports = router;
