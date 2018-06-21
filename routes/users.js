@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var multer = require('multer');
 
 var User = require('../models/user');
 var Participant = require('../models/participant');
@@ -156,32 +155,5 @@ router.get('/logout', function (req, res) {
 
 	res.redirect('/users/login');
 });
-
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-      cb(null,file.originalname);
-    }
-  })
-  
-var upload = multer({ storage: storage }).single('poster');
-
-router.post('/profile', function (req, res) {
-  upload(req, res, function (err) {
-    if (err) {
-      // An error occurred when uploading
-    }
-
-	// Everything went fine
-	res.json({
-		success: true,
-		message: 'Image'
-	});
-  })
-});
-
 
 module.exports = router;
