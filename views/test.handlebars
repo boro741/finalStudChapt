@@ -1,35 +1,5 @@
-
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            var options = {
-                beforeSubmit: showRequest,  // pre-submit callback
-                success: showResponse  // post-submit callback
-            };
-
-            // bind to the form's submit event
-            $('#frmUploader').submit(function () {
-                $(this).ajaxSubmit(options);
-                // always return false to prevent standard browser submit and page navigation
-                return false;
-            });
-        });
-
-        // pre-submit callback
-        function showRequest(formData, jqForm, options) {
-            alert('Uploading is starting.');
-            return true;
-        }
-
-        // post-submit callback
-        function showResponse(responseText, statusText, xhr, $form) {
-            alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
-        }
-    </script>
-    <form id="frmUploader" action="users/api/Upload/" method="post">
-        <input type="file" name="imgUploader" multiple />
-        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
-    </form>
+<!-- public/index.html file -->
+ <form action="/posters" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="photo" />
+   <input type="submit" value="Upload Photo"/>
+</form>

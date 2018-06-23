@@ -16,22 +16,6 @@ router.get('/login', function (req, res) {
 	res.render('login');
 });
 
-// Create Event
-router.post('/createEvent', function(req,res){
-	var eventName = req.body.eventName;
-	var description = req.body.description;
-	var poster = req.body.poster;
-	var eventDate = req.body.eventDate;
-	var mobNo = req.body.mobNo;
-	var email = req.body.email;
-
-	
-	console.log(req.body);
-	res.render('home', {
-		poster
-	});
-});
-
 
 // Register Participant
 router.post('/regParticipant', function(req,res){

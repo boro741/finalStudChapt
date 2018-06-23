@@ -7,15 +7,18 @@ var EventSchema = mongoose.Schema({
 		type: String,
 		index:true
     },
-	desciption: {
+	description: {
 		type: String
 	},poster: {
-        type: String,
-    },
-	email: {
-		type: String
+        type: String
+    },eventDate: {
+		type: Date
+	},mobileNo: {
+		type: Number
 	},
-	mobile: {
+	emailId: {
+		type: String
+	},price: {
 		type: Number
 	}
 });
@@ -23,7 +26,7 @@ var EventSchema = mongoose.Schema({
 var Event = module.exports = mongoose.model('Event', EventSchema);
 
 module.exports.createEvent = function(newEvent, callback){
-	newParticipant.save(callback);
+	newEvent.save(callback);
 }
 
 module.exports.getEventByeventName = function(eventName, callback){
