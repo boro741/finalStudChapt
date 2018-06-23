@@ -4,19 +4,42 @@ var multer = require('multer');
 
 var Event = require('../models/event');
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/posters')
-    },
-    filename: function (req, file, cb) {
-      cb(null,file.originalname);
-    }
-});
-  
-var upload = multer({ storage: storage }).single('poster');
+//MULTER CONFIG: to get file photos to temp server storage
+const multerConfig = {
+    
+	storage: multer.diskStorage({
+	 //Setup where the user's file will go
+	 destination: function(req, file, next){
+	   next(null, 'uploads/');
+	   },   
+		
+		//Then give the file a unique name
+		filename: function(req, file, next){
+			console.log(file);
+			next(null, file.originalname);
+		  }
+		}),   
+		
+		//A means of ensuring only images are uploaded. 
+		fileFilter: function(req, file, next){
+			  if(!file){
+				next();
+			  }
+			const image = file.mimetype.startsWith('image/');
+			if(image){
+			  console.log('photo uploaded');
+			  next(null, true);
+			}else{
+			  console.log("file not supported");
+			  
+			  //TODO:  A better message response to user on failure.
+			  return next();
+			}
+	}
+};
 
 // Create Event
-router.post('/createEvent', function(req,res){
+router.post('/createEvent',multer(multerConfig).single('photo'),function(req,res){
 	var eventName = req.body.eventName;
 	var description = req.body.description;
 	var poster = req.body.poster;
@@ -25,38 +48,25 @@ router.post('/createEvent', function(req,res){
 	var emailId = req.body.emailId;
 	var price = req.body.price;
 
+	console.log(req.file);
 	
-	var newEvent = new Event({
-		eventName: eventName,
-		description: description,
-		poster: poster,
-		eventDate: eventDate,
-		mobileNo: mobileNo,
-		emailId: emailId,
-		price: price
-	});
+	// var newEvent = new Event({
+	// 	eventName: eventName,
+	// 	description: description,
+	// 	poster: poster,
+	// 	eventDate: eventDate,
+	// 	mobileNo: mobileNo,
+	// 	emailId: emailId,
+	// 	price: price
+	// });
 
-	Event.createEvent(newEvent, function (err, event) {
-	if (err) throw err;
-		console.log(event);
-	});
+	// Event.createEvent(newEvent, function (err, event) {
+	// if (err) throw err;
+	// 	console.log(event);
+	// });
 
-	upload(req, res, function (err) {
-		if (err) {
-		  // An error occurred when uploading
-		}
-	
-		// Everything went fine
-		res.json({
-			success: true,
-			message: 'Image'
-		});
-	  });
-
-	req.flash('success_msg', 'Event Published');
+	// req.flash('success_msg', 'Event Published');
 	res.redirect('/');
-
-	console.log('Event Body: ',req.body);
 });
 
 module.exports = router;
