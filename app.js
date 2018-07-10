@@ -12,13 +12,14 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var multer = require('multer');
 
-mongoose.connect('mongodb://localhost/loginapp');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/stuChapt');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posters = require('./routes/posters');
 var events = require('./routes/events');
+var advertise = require('./routes/advertise');
 
 // Init App
 var app = express();
@@ -35,6 +36,7 @@ app.use(cookieParser());
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads',express.static('uploads'));
 
 // Express Session
 app.use(session({
@@ -82,6 +84,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/posters',posters);
 app.use('/events',events);
+app.use('/advertise',advertise);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

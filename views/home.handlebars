@@ -1,3 +1,37 @@
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<style>
+  #postId{
+      max-width: 400px;
+      max-height: 180px
+  }
+</style>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
  <h2 class="page-header">Home</h2>
 <p>Welcome to your Home page</p> 
-<img src='./../uploads/posters/{{poster}}'>
+<ul class="post"></ul>
+
+<script>
+    $(document).ready(function(){
+        	var eventName = '{{eventName}}';
+	        var description = '{{description}}';
+	        var poster = '{{poster}}';
+	        var eventDate = '{{eventDate}}';
+	        var mobileNo = '{{mobileNo}}';
+	        var emailId = '{{emailId}}';
+	        var price = '{{price}}';
+
+        posts = poster.split(',');
+        posts.forEach(function(url){
+           //console.log("test");
+           if(!url) return;
+            var posterURL = window.location.href + url;
+           // console.log('URL: ',url);
+            $("<li> <img id='postId' src='"+ posterURL +"'><li />").appendTo('ul.post')
+        }); 
+        console.log('posts: ',eventName);
+    });
+    
+</script>

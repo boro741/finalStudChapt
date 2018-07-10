@@ -15,7 +15,6 @@ const multerConfig = {
 		
 		//Then give the file a unique name
 		filename: function(req, file, next){
-			console.log(file);
 			next(null, file.originalname);
 		  }
 		}),   
@@ -39,33 +38,34 @@ const multerConfig = {
 };
 
 // Create Event
-router.post('/createEvent',multer(multerConfig).single('photo'),function(req,res){
+router.post('/createEvent',multer(multerConfig).single('poster'),function(req,res){
 	var eventName = req.body.eventName;
 	var description = req.body.description;
-	var poster = req.body.poster;
 	var eventDate = req.body.eventDate;
 	var mobileNo = req.body.mobileNo;
 	var emailId = req.body.emailId;
 	var price = req.body.price;
+	var poster = req.file.path;
 
-	console.log(req.file);
+	//console.log('Path: ',req.file);
 	
-	// var newEvent = new Event({
-	// 	eventName: eventName,
-	// 	description: description,
-	// 	poster: poster,
-	// 	eventDate: eventDate,
-	// 	mobileNo: mobileNo,
-	// 	emailId: emailId,
-	// 	price: price
-	// });
+	var newEvent = new Event({
+		eventName: eventName,
+		description: description,
+		poster: poster,
+		eventDate: eventDate,
+		mobileNo: mobileNo,
+		emailId: emailId,
+		price: price
+	});
 
-	// Event.createEvent(newEvent, function (err, event) {
-	// if (err) throw err;
-	// 	console.log(event);
-	// });
+	Event.createEvent(newEvent, function (err, event) {
+	if (err) throw err;
+		console.log(event);
+	});
 
-	// req.flash('success_msg', 'Event Published');
+	req.flash('success_msg', 'Event Published');
+	
 	res.redirect('/');
 });
 

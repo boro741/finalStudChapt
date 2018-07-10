@@ -1,15 +1,19 @@
 {
-  "name": "loginapp",
+  "name": "studentChapter",
   "version": "1.0.0",
-  "description": "Simple authentication system",
+  "description": "A single platform for all college student chapter events",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Brad Traversy",
-  "license": "ISC",
+  "engines": {
+    "node": "8.9.1"    
+  },
+  "author": "Pavan Lal Boro",
+  "license": "MIT License",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",
@@ -22,8 +26,11 @@
     "mongodb": "*",
     "mongoose": "*",
     "multer": "^1.3.0",
+    "nexmo": "^2.3.2",
+    "node-bulk-sms": "^1.0.7",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "twilio": "^3.17.4"
   }
 }

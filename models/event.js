@@ -38,3 +38,5 @@ module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
 
+module.exports.Event = Event;
+

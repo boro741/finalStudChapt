@@ -18,16 +18,27 @@
  <h2 class="page-header">Dashboard</h2>
 <p>Welcome to your dashboard</p> 
 
-<button id="regParticipant"><a href="/regParticipant">Register Partipants</a></button>
+<button ><a href="/advertise">Advertise Event </a></button>
+<button id="teamReg">Register Partipants</button>
 <button  id="createEvent">+ Create Event</button>
 
-
+<div id="teamSizeContainer"></div>
 <div id="eventContainer"></div>
+<div id="adContainer"></div>
 </body>
 <script>
     $("#createEvent").click(function(){
-        $("#eventContainer").html("<form method='post' action='/events/createEvent'> <div class='form-group'> <label>Event Name:</label> <input type='text' class='form-control' name='eventName'></div>  <div class='form-group'> <label>Description:</label> <textarea name='description' rows='10' cols='30' class='form-control'></textarea><div> <div class='form-group'> <input type='file' onchange='readURL(this)' name='poster' /> <img id='poster' onclick='sr(this.src)'></div> <div class='form-group'> <label> Event Date: </label> <input type='date' name='eventDate' ></div> <div class='form-group'> <label>Mobile No: </label> <input type='number' name='mobileNo'> </div> <div class='form-group'><label>Email ID: </label> <input type='email' name='emailId'> </div> <div class='form-group'><label>Price: </label> <input type='number' placeholder='Rs.' name='price' > </div><button type='submit' class='btn btn-default'>Publish</button></form>");
+        $("#eventContainer").html("<form method='post' action='/events/createEvent' enctype='multipart/form-data'> <div class='form-group'> <label>Event Name:</label> <input type='text' class='form-control' name='eventName'></div>  <div class='form-group'> <label>Description:</label> <textarea name='description' rows='10' cols='30' class='form-control'></textarea><div> <div class='form-group'> <input type='file' onchange='readURL(this)' name='poster' /> <img id='poster' onclick='sr(this.src)'></div> <div class='form-group'> <label> Event Date: </label> <input type='date' name='eventDate' ></div> <div class='form-group'> <label>Mobile No: </label> <input type='number' name='mobileNo'> </div> <div class='form-group'><label>Email ID: </label> <input type='email' name='emailId'> </div> <div class='form-group'><label>Price: </label> <input type='number' placeholder='Rs.' name='price' > </div><button type='submit' class='btn btn-default'>Publish</button></form>");
     });
+
+    $("#teamReg").click(function(){
+        $("#teamSizeContainer").html('<hr><label>Team Size: </label><input type="number" name="teamSize" > <button type="submit" onclick="redirect()" class="btn btn-default">Proceed</button>'); 
+    });
+
+    function redirect(){
+        var size = $("input[name=teamSize]").val();
+        window.location.replace("/teamReg?size="+size);
+    }
 
     function readURL(input) {
             if (input.files && input.files[0]) {

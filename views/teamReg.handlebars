@@ -1,0 +1,45 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<form action="/regEvent" method="post" id="eveForm">
+  <h2>Event Name</h2>
+  
+  <hr>
+    <h3>Participant 1:</h3>
+  <label>Roll no. : </label>  
+  <input type="text" name=""> 
+  <br><br>
+  <label>Contact Number: </label>
+  <input type="number">
+
+  <hr>
+    <span id="teamMates"></span>
+  <hr>  
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+    var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+     $(document).ready(function(){
+         var n = getUrlParameter('size') || 1;
+        for(var i=1; i < n; i++){
+          $('<h3>Participant: '+ (i+1) +'</h3><br><label>Roll no. : </label><input type="text" name="">').appendTo("#teamMates");
+        }
+     });
+</script>
